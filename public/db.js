@@ -52,6 +52,7 @@ request.onerror = function(event){
   console.log("Error" + event.target.errorCode);
 };
 
+// eslint-disable-next-line no-unused-vars
 function saveRecord(data){
   const transaction = db.transaction(["pending"], "readwrite");
 

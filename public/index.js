@@ -1,19 +1,6 @@
 let transactions = [];
 let myChart;
 
-fetch("/api/transaction")
-  .then(response => {
-    return response.json();
-  })
-  .then(data => {
-    // save db data on global variable
-    transactions = data;
-
-    populateTotal();
-    populateTable();
-    populateChart();
-  });
-
 function populateTotal() {
   // reduce transaction amounts to a single total value
   let total = transactions.reduce((total, t) => {
@@ -77,6 +64,20 @@ function populateChart() {
     }
   });
 }
+fetch("/api/transaction")
+  .then(response => {
+    return response.json();
+  })
+  .then(data => {
+    // save db data on global variable
+    transactions = data;
+
+    populateTotal();
+    populateTable();
+    populateChart();
+  });
+
+
 
 function sendTransaction(isAdding) {
   let nameEl = document.querySelector("#t-name");
@@ -132,6 +133,7 @@ function sendTransaction(isAdding) {
         amountEl.value = "";
       }
     })
+    // eslint-disable-next-line no-unused-vars
     .catch(err => {
     // fetch failed, so save in indexed db
       saveRecord(transaction);
