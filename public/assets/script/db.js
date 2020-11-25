@@ -1,4 +1,4 @@
-let db = null;
+let db;
 const request = indexedDB.open("budget", 1);
 
 request.onupgradeneeded = function(event){
@@ -7,7 +7,7 @@ request.onupgradeneeded = function(event){
   db.createObjectStore("pending",{ autoIncrement: true });
 };
 
-function checkDB(){
+function checkDatabase(){
   const transaction = db.transaction(["pending"], "readwrite");
   // access pending object store
   const store = transaction.objectStore("pending");
@@ -44,7 +44,7 @@ request.onsuccess = function(event){
   db = event.target.result;
 
   if(navigator.onLine){
-    checkDB();
+    checkDatabase();
   }
 };
 
@@ -64,4 +64,4 @@ function saveRecord(data){
 
 
 // listen for app coming back online
-window.addEventListener("online", checkDB);
+window.addEventListener("online", checkDatabase);

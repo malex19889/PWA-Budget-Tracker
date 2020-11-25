@@ -64,20 +64,6 @@ function populateChart() {
     }
   });
 }
-fetch("/api/transaction")
-  .then(response => {
-    return response.json();
-  })
-  .then(data => {
-    // save db data on global variable
-    transactions = data;
-
-    populateTotal();
-    populateTable();
-    populateChart();
-  });
-
-
 
 function sendTransaction(isAdding) {
   let nameEl = document.querySelector("#t-name");
@@ -143,6 +129,19 @@ function sendTransaction(isAdding) {
       amountEl.value = "";
     });
 }
+
+fetch("/api/transaction")
+  .then(response => {
+    return response.json();
+  })
+  .then(data => {
+    // save db data on global variable
+    transactions = data;
+
+    populateTotal();
+    populateTable();
+    populateChart();
+  });
 
 document.querySelector("#add-btn").onclick = function() {
   sendTransaction(true);

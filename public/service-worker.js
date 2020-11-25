@@ -1,10 +1,13 @@
 const FILES_TO_CACHE = [
   "/",
   "/index.html",
-  "/assets/css/style.css",
+  "/assets/css/styles.css",
   "/dist/index.bundle.js",
   "/dist/db.bundle.js",
-  "/assets/icons/icon-192x192.png"
+  "/assets/icons/icon-192x192.png",
+  "https://unpkg.com/dexie@latest/dist/dexie.js",
+  "/assets/script/db.js",
+  "/assets/script/index.js",
 ];
 
 const PRECACHE = "precache-v1";
@@ -39,22 +42,33 @@ self.addEventListener("activate", (event) => {
   );
 });
 
-self.addEventListener("fetch", (event) => {
-  if (event.request.url.startsWith(self.location.origin)) {
+self.addEventListener("fetch", function(event) {
+  if (event.request.url.includes(self.location.origin)) {
     event.respondWith(
-      caches.match(event.request).then((cachedResponse) => {
-        if (cachedResponse) {
-          return cachedResponse;
-        }
+      caches.open(RUNTIME).then(cache => {
+        return fetch(event.request)
+          .then(response => {
+            if (response.status === 200) {
+              cache.put(event.request.url, response.clone());
+            }
 
-        return caches.open(RUNTIME).then((cache) => {
-          return fetch(event.request).then((response) => {
-            return cache.put(event.request, response.clone()).then(() => {
-              return response;
-            });
+            return response;
+          })
+          .catch(err => {
+            console.log(err);
+            return cache.match(event.request);
           });
-        });
       })
     );
+
+    return;
   }
+
+  event.respondWith(
+    caches.open(RUNTIME).then(cache => {
+      return cache.match(event.request).then(response => {
+        return response || fetch(event.request);
+      });
+    })
+  );
 });
