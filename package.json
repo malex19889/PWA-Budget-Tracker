@@ -10,8 +10,7 @@
     "lint": "eslint \"**/*.js\" --quiet",
     "fix": "eslint \"**/*.js\" --fix",
     "webpack": "webpack --watch",
-    "prestart": "npm run build",
-    "build": "npm run webpack"
+    "heroku-postbuild": "webpack -p"
   },
   "repository": {
     "type": "git",
