@@ -6,6 +6,7 @@ const FILES_TO_CACHE = [
   "/dist/db.bundle.js",
   "/assets/icons/icon-192x192.png",
   "https://unpkg.com/dexie@latest/dist/dexie.js",
+  "https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css",
   "/assets/script/db.js",
   "/assets/script/index.js",
 ];

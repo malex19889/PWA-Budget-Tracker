@@ -9,7 +9,7 @@
     "lite-server": "lite-server",
     "lint": "eslint \"**/*.js\" --quiet",
     "fix": "eslint \"**/*.js\" --fix",
-    "prestart": "webpack",
+    "prestart": "npm run webpack",
     "build": "webpack"
   },
   "repository": {
